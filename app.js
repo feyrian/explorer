@@ -114,6 +114,7 @@ app.set('locale', locale);
 app.set('display', settings.display);
 app.set('markets', settings.markets);
 app.set('snlinks', settings.snlinks);
+app.set('bitcointalk', settings.bitcointalk);
 app.set('discord', settings.discord);
 app.set('facebook', settings.facebook);
 app.set('github', settings.github);
