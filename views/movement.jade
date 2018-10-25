@@ -2,8 +2,6 @@ extends layout
 
 block content
   script.
-    var rplot;
-    var colors = [ "#0071bc" ];
     $(document).ready(function(){
       function format_unixtime(unixtime) {
         var a = new Date(unixtime*1000);  
@@ -31,12 +29,12 @@ block content
         return time;
       }
       var rtable = $('#alerts-table').dataTable( {  
-        autoWidth: false,      
+        autoWidth: true,      
         searching: false,
         ordering: false,
-        //responsive: true,
-        lengthChange: false,
-        //processing: true,
+        responsive: true,
+        lengthChange: true,
+        processing: true,
         ajax: {
           url: '/ext/getlasttxs/#{min_amount}',
           dataSrc: function ( json ) {
@@ -56,18 +54,24 @@ block content
           }
         },
         columns: [
-          { data: 'timestamp', width: '25%' },
-          { data: 'txid', width: '60%' },
-          { data: 'total', width: '15%' },
+          { data: 'timestamp', class:'text-nowrap', width: '25%' },
+          { data: 'txid', class:'text-mono', width: '60%' },
+          { data: 'total', class:'text-numeric', width: '15%' }
         ]
       });
       setInterval( function () {
         rtable.api().ajax.reload(null, false);
       }, 45000 );
     });
-  .col-xs-12.col-md-10.col-md-offset-1(style="margin-bottom: 5%")
-    table#alerts-table.table.table-striped.table-bordered
-      thead
-        th timestamp
-        th.hidden-xs txid
-        th amount
+  //- .col-md-12(style="margin-bottom: 5%")
+  .col-xs-12.col-md-10.col-md-offset-1
+     .panel.panel-default
+      .panel-heading
+        strong #{settings.locale.mv_latest_movements}
+      table#alerts-table.table.table-bordered.table-striped
+        thead
+          tr
+            th.text-center #{settings.locale.timestamp}
+            th.hidden-xs.text-center #{settings.locale.tx_hash}
+            th.text-center.text-nowrap #{settings.locale.mkt_amount} (#{settings.symbol})
+        tbody.text-center

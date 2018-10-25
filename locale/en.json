@@ -35,6 +35,9 @@
     "tx_address": "Address",
     "tx_nonstandard": "NONSTANDARD TX",
 
+    // movement view
+    "mv_latest_movements": "Latest Movements",
+
     // block view
     "block_previous": "Previous",
     "block_next": "Next",

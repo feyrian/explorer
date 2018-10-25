@@ -1,26 +1,15 @@
-Iquidus Explorer - 1.6.1
+Tau Explorer - 1.0
 ================
 
-An open source block explorer written in node.js.
+A [Tau coin](https://taucoin.io) block explorer.
 
-### See it in action
-
-*  [Deutsche eMark](http://b.emark.tk/)
-*  [Sphere](http://sphere.iquidus.io)
-*  [Vertcoin](http://explorer.vertcoin.info/)
-*  [Vivo](http://vivo.explorerz.top:3003)
-*  [Florincoin](https://florincoin.info/info)
-*  [Maxcoin Explorer 1](https://explorer.maxcoinproject.net/)
-*  [Maxcoin Explorer 2](https://explorer2.maxcoinproject.net/)
-
-
-*note: If you would like your instance mentioned here contact me*
+This project is a fork of [Iquidus Explorer](https://github.com/iquidus/explorer), an open source block explorer written in node.js.
 
 ### Requires
 
 *  node.js >= 0.10.28
 *  mongodb 2.6.x
-*  *coind
+*  taucoind, taucoin-cli
 
 ### Create database
 
@@ -30,23 +19,20 @@ Enter MongoDB cli:
 
 Create databse:
 
-    > use explorerdb
+    > use tauexplorerdb
 
 Create user with read/write access:
 
-    > db.createUser( { user: "iquidus", pwd: "3xp!0reR", roles: [ "readWrite" ] } )
+    > db.createUser( { user: "tauexplorer", pwd: "potisgood", roles: [ "readWrite" ] } )
 
-*note: If you're using mongo shell 2.4.x, use the following to create your user:
-
-    > db.addUser( { user: "username", pwd: "password", roles: [ "readWrite"] })
 
 ### Get the source
 
-    git clone https://github.com/iquidus/explorer explorer
+    git clone https://github.com/Feyrian/tau-explorer tau-explorer
 
 ### Install node modules
 
-    cd explorer && npm install --production
+    cd tau-explorer && npm install --production
 
 ### Configure
 
@@ -89,27 +75,29 @@ sync.js (located in scripts/) is used for updating the local databases. This scr
     * If check mode finds missing data(ignoring new data since last sync),
       index_timeout in settings.json is set too low.
 
-
 *It is recommended to have this script launched via a cronjob at 1+ min intervals.*
 
 **crontab**
+    
+    crontab -e
 
 *Example crontab; update index every minute and market data every 2 minutes*
 
-    */1 * * * * cd /path/to/explorer && /usr/bin/nodejs scripts/sync.js index update > /dev/null 2>&1
-    */2 * * * * cd /path/to/explorer && /usr/bin/nodejs scripts/sync.js market > /dev/null 2>&1
-    */5 * * * * cd /path/to/explorer && /usr/bin/nodejs scripts/peers.js > /dev/null 2>&1
+    */1 * * * * cd /path/to/tau-explorer && /usr/bin/nodejs scripts/sync.js index update > /dev/null 2>&1
+    */2 * * * * cd /path/to/tau-explorer && /usr/bin/nodejs scripts/sync.js market > /dev/null 2>&1
+    */5 * * * * cd /path/to/tau-explorer && /usr/bin/nodejs scripts/peers.js > /dev/null 2>&1
 
 ### Wallet
 
-Iquidus Explorer is intended to be generic so it can be used with any wallet following the usual standards. The wallet must be running with atleast the following flags
+The wallet must be running with atleast the following flags
 
     -daemon -txindex
 
 ### Donate
 
-    BTC: 168hdKA3fkccPtkxnX8hBrsxNubvk4udJi
-    JBS: JZp9893FMmrm1681bDuJBU7c6w11kyEY7D
+    BTC: 16eYur5vas3JVq8zEtfzy5nht8paC8683
+    TAU: TAAB2V8P1bGAkUtktQbk3MTKpbCWK4KghG
+    
 
 ### Known Issues
 

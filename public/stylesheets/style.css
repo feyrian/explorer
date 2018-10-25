@@ -78,6 +78,16 @@ tr {
 	width: 100%;
 }
 
+td.text-mono{
+	font-family: monospace;
+}
+td.text-numeric{
+	text-align: right;
+}
+td.text-nowrap{
+	white-space: nowrap;
+}
+
 .footer-padding {
 	height: 50px;
 	width: 100%;
@@ -96,22 +106,34 @@ tr {
 	margin-left:5px;
 }
 
-#twitter-icon {
-	font-size: 20px;
-}
-.connections {
-	position: absolute;
-	bottom: 15px;
-	right: 15px;
+.navbar-brand {
+    font-size: 20px;
+    font-weight: bold;
 }
 
+.navbar-fixed-top .navbar-link {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.navbar-fixed-bottom > div{
+	min-height: 50px;
+}
+
+.snlinks .snlink{
+	font-size: 20px;
+	line-height: 1;
+}
+
+.connections {
+	line-height: 50px;
+}
+.connections .label{
+	font-size: 16px;
+	display: inline-block;
+}
 #lblBlockcount {
 	margin-right: 10px;
-}
-
-#twitter-icon img{
-	width: 40px;
-	margin: 5px 5px;
 }
 
 #market_menu {

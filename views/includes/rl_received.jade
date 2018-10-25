@@ -14,10 +14,10 @@
         - count = count + 1
         - var itemFixed = item.received / 100000000
         tr
-          td(style='text-align:center;') 
-            =count
           td
+            =count
+          td.text-mono
             a(href='/address/#{item.a_id}') #{item.a_id}
             include ./rl_labels.jade
-          td.hidden-xs
+          td.text-numeric.hidden-xs
             =itemFixed.toFixed(8)

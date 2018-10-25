@@ -5,7 +5,7 @@ html
     link(rel='stylesheet', href='/themes/#{settings.theme}/bootstrap.min.css')
     link(rel='stylesheet', href='/vendor/jqplot/jquery.jqplot.css')
     link(rel='stylesheet', href='//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css')
-    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='//use.fontawesome.com/releases/v5.4.1/css/all.css', integrity='sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz', crossorigin='anonymous')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
     script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
@@ -26,14 +26,11 @@ html
         $('##{active}').addClass('active');
         function update_stats(){   
           $.ajax({url: '/ext/summary', success: function(json){
-            $("#supply").text(json.data[0].supply);
-            $("#difficulty").text(json.data[0].difficulty);
-            $("#difficultyHybrid").text(json.data[0].difficultyHybrid);
-            $("#hashrate").text(json.data[0].hashrate);
-            $("#lastPrice").text(json.data[0].lastPrice.toFixed(8));
+            // $("#supply").text(json.data[0].supply);
+            // $("#lastPrice").text(json.data[0].lastPrice.toFixed(8));
             $("#lblConnections").text(json.data[0].connections + ' connections');
             $("#lblBlockcount").text(json.data[0].blockcount + ' blocks');
-            $("#lblX1").text(' ');
+            // $("#lblX1").text(' ');
           }});
         }
         $('.block-last-next').tooltip({
@@ -93,7 +90,7 @@ html
           ul.nav.navbar-nav
             li#home
               a.navbar-link(href='/') 
-                span.glyphicon.glyphicon-search
+                span.fa.fa-search
                 span.menu-text #{settings.locale.menu_explorer}
             if settings.heavy == true
               li#reward
@@ -103,7 +100,7 @@ html
             if settings.display.movement == true
               li#movement 
                 a.navbar-link.loading(href='/movement') 
-                  span.fa.fa-money
+                  span.fa.fa-money-bill-alt
                   span.menu-text #{settings.locale.menu_movement}
             if settings.display.network == true
               li#network
@@ -113,114 +110,80 @@ html
             if settings.display.richlist == true
               li#richlist
                 a.navbar-link(href='/richlist')
-                  span.fa.fa-btc
+                  span.fa.fa-chart-pie
                   span.menu-text #{settings.locale.menu_richlist}
             if settings.display.markets == true
               li#markets
                 a.navbar-link.loading(href='/markets/#{settings.markets.default}') 
-                  span.fa.fa-line-chart
+                  span.fa.fa-chart-line
                   span.menu-text #{settings.locale.menu_markets}
             if settings.display.api == true
               li#info
                 a.navbar-link(href='/info')
-                  span.glyphicon.glyphicon-info-sign
+                  span.fa.fa-info-circle
                   span.menu-text #{settings.locale.menu_api}
-    .col-md-12
-      .row.text-center
-        .col-md-2.col-md-offset-1
-          .panel.panel-default.hidden-sm.hidden-xs
-            .panel-heading
-              if settings.nethash_units == 'K'
-                strong #{settings.locale.network} (KH/s)
-              else if settings.nethash_units == 'M'
-                strong #{settings.locale.network} (MH/s)
-              else if settings.nethash_units == 'G'
-                strong #{settings.locale.network} (GH/s)
-              else if settings.nethash_units == 'T'
-                strong #{settings.locale.network} (TH/s)
-              else if settings.nethash_units == 'P'
-                strong #{settings.locale.network} (PH/s)
-              else if settings.nethash_units == 'H'
-                strong #{settings.locale.network} (H/s)
-            .panel-body
-              if settings.index.difficulty == 'Hybrid'
-               label#hashrate - 
-               <br>
-               label#lblX1  
-              else  
-               label#hashrate - 
-        .col-md-2
-          .panel.panel-default.hidden-sm.hidden-xs
-            .panel-heading
-              strong #{settings.locale.difficulty}
-            .panel-body
-              if settings.index.difficulty == 'Hybrid'
-               label#difficulty -
-               <br>
-               label#difficultyHybrid -
-              else
-               label#difficulty -
-        .col-md-2.col-sm-12
-          img(src='#{settings.logo}', style='margin-top:-15px;height:128px;')
-        .col-md-2
-          .panel.panel-default.hidden-sm.hidden-xs
-            .panel-heading
-              strong #{settings.locale.ex_supply} (#{settings.symbol})
-            .panel-body
-              if settings.index.difficulty == 'Hybrid'
-               label#supply - 
-               <br>
-               label#lblX1
-              else
-               label#supply -  
-        .col-md-2
-          .panel.panel-default.hidden-sm.hidden-xs
-            .panel-heading
-              strong #{settings.markets.exchange} Price
-            .panel-body
-              if settings.index.difficulty == 'Hybrid'
-               label#lastPrice -
-               <br>
-               label#lblX1
-              else
-               label#lastPrice - 
-                 
-      .row.text-center(style='margin-top:10px;margin-bottom:20px;')
+    .row.text-center
+      .col-md-12
+        img(src='#{settings.logo}', style='margin-top:-15px;height:128px;')
+      .col-md-12(style='margin-top:10px;margin-bottom:20px;')
         form.form-inline(method='post', action='/search')      
           #index-search.form-group
             input.form-control(type='text', name='search', placeholder='#{settings.locale.ex_search_message}', style='min-width:80%;margin-right:5px;')
             button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
-    block content
+
+    .row
+      block content
+
     .navbar.navbar-default.navbar-fixed-bottom.hidden-xs
-      .col-md-4
-        if settings.display.twitter
-          ul.nav.navbar-nav
-            li.pull-left
-              a#twitter-icon(href="https://twitter.com/#{settings.twitter}", target='_blank')
-                span.glyphicon.fa.fa-twitter
-        if settings.display.facebook
-          ul.nav.navbar-nav
-            li.pull-left
-              a#facebook-icon(href="https://www.facebook.com/#{settings.facebook}", target='_blank')
-                span.glyphicon.fa.fa-facebook
-        if settings.display.googleplus
-          ul.nav.navbar-nav
-            li.pull-left
-              a#googleplus-icon(href="https://plus.google.com/#{settings.googleplus}", target='_blank')
-                span.glyphicon.fa.fa-google-plus
-        if settings.display.youtube
-          ul.nav.navbar-nav
-            li.pull-left
-              a#youtube-icon(href="https://www.youtube.com/channel/#{settings.youtube}", target='_blank')
-                span.glyphicon.fa.fa-youtube
-     .col-md-4
-        ul.nav
-          li.text-center(style='margin-left:80px;margin-right:80px;')
-            p(style='margin-top:15px;') 
-              a.navbar-link(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer 
-      span.connections
-        label#lblBlockcount.label.label-default -
-        label#lblConnections.label.label-default -
-
-
-              
+      // .row
+      .col-sm-4
+        ul.nav.navbar-nav.snlinks
+          if settings.snlinks.twitter
+            li
+              a#twitter-icon.snlink(href="https://twitter.com/#{settings.twitter}", title='Twitter', target='_blank')
+                span.fab.fa-twitter
+          if settings.snlinks.facebook
+            li
+              a#facebook-icon.snlink(href="https://www.facebook.com/#{settings.facebook}", title='Facebook', target='_blank')
+                span.fab.fa-facebook-f
+          if settings.snlinks.reddit
+            li
+              a#reddit-icon.snlink(href="https://reddit.com/r/#{settings.reddit}", title='Reddit', target='_blank')
+                span.fab.fa-reddit
+          if settings.snlinks.discord
+            li
+              a#discord-icon.snlink(href="https://discord.gg/#{settings.discord}", title='Discord', target='_blank')
+                span.fab.fa-discord
+          if settings.snlinks.telegram
+            li
+              a#telegram-icon.snlink(href="https://t.me/#{settings.telegram}", title='Telegram', target='_blank')
+                span.fab.fa-telegram-plane
+          if settings.snlinks.medium
+            li
+              a#medium-icon.snlink(href="https://medium.com/#{settings.medium}", title='Medium', target='_blank')
+                span.fab.fa-medium-m
+          if settings.snlinks.github
+            li
+              a#github-icon.snlink(href="https://github.com/#{settings.github}", title='Github', target='_blank')
+                span.fab.fa-github
+          if settings.snlinks.youtube
+            li
+              a#youtube-icon.snlink(href="https://www.youtube.com/channel/#{settings.youtube}", title='Youtube', target='_blank')
+                span.fab.fa-youtube
+          if settings.snlinks.bitcointalk
+            li
+              a#bitcointalk-icon.snlink(href="#{settings.bitcointalk}", title='Bitcointalk ANN', target='_blank')
+                span.fab.fa-btc
+          if settings.snlinks.website
+            li
+              a#website-icon.snlink(href="#{settings.website}", target='_blank')
+                span.fas.fa-globe
+      .col-sm-4
+        div.text-center(style='margin-top: 5px;')
+          a.navbar-link(style='font-size: 120%;', href='https://github.com/#{settings.github}', target='_blank') Tau explorer
+          br
+          a.navbar-link(style='font-size: 80%;', href='https://github.com/iquidus/explorer', target='_blank') Based on Iquidus Explorer 
+      .col-sm-4
+        div.connections.text-right
+          span#lblBlockcount.label.label-default -
+          spanl#lblConnections.label.label-default -
