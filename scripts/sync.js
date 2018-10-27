@@ -1,9 +1,9 @@
 var mongoose = require('mongoose')
   , db = require('../lib/database')
-  , Tx = require('../models/tx')  
   , Address = require('../models/address')  
   , Richlist = require('../models/richlist')  
   , Stats = require('../models/stats')  
+  , Tx = require('../models/tx')  
   , settings = require('../lib/settings')
   , fs = require('fs');
 
@@ -16,7 +16,6 @@ function usage() {
   console.log('');
   console.log('database: (required)');
   console.log('index [mode] Main index: coin info/stats, transactions & addresses');
-  console.log('market       Market data: summaries, orderbooks, trade history & chartdata')
   console.log('');
   console.log('mode: (required for index database only)');
   console.log('update       Updates index from last sync to current block');
@@ -52,8 +51,6 @@ if (process.argv[2] == 'index') {
       usage();
     }
   }
-} else if (process.argv[2] == 'market'){
-  database = 'market';
 } else {
   usage();
 }
@@ -138,11 +135,6 @@ is_locked(function (exists) {
             } else {
               db.update_db(settings.coin, function(){
                 db.get_stats(settings.coin, function(stats){
-                  if (settings.heavy == true) {
-                    db.update_heavy(settings.coin, stats.count, 20, function(){
-                    
-                    });
-                  }
                   if (mode == 'reindex') {
                     Tx.remove({}, function(err) { 
                       Address.remove({}, function(err2) { 
@@ -191,38 +183,6 @@ is_locked(function (exists) {
               });
             }
           });
-        } else {
-          //update markets
-          var markets = settings.markets.enabled;
-          var complete = 0;
-          for (var x = 0; x < markets.length; x++) {
-            var market = markets[x];
-            db.check_market(market, function(mkt, exists) {
-              if (exists) {
-                db.update_markets_db(mkt, function(err) {
-                  if (!err) {
-                    console.log('%s market data updated successfully.', mkt);
-                    complete++;
-                    if (complete == markets.length) {
-                      exit();
-                    }
-                  } else {
-                    console.log('%s: %s', mkt, err);
-                    complete++;
-                    if (complete == markets.length) {
-                      exit();
-                    }
-                  }
-                });
-              } else {
-                console.log('error: entry for %s does not exists in markets db.', mkt);
-                complete++;
-                if (complete == markets.length) {
-                  exit();
-                }
-              }
-            });
-          }
         }
       });
     });

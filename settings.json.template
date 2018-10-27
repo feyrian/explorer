@@ -48,7 +48,7 @@
     "host": "localhost",
     "port": 8778,
     "user": "TAUrpc",
-    "pass": "123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ"
+    "pass": "password"
   },
 
   // Language settings
@@ -57,7 +57,6 @@
   // Menu items to display
   "display": {
     "api": true,
-    "markets": false,
     "movement": true,
     "network": true,
     "richlist": true,
@@ -86,18 +85,6 @@
     "address": "TGwH9btZVNtP7HqLyULt2e8EmFkqfJJCbZ"
   },
 
-  // Market settings
-  // supported markets: bittrex, poloniex, yobit, empoex, bleutrade, cryptopia, ccex
-  // default market is loaded by default and determines last price in header
-  "markets": {
-    "coin": "TAU",
-    "exchange": "BTC",
-    "enabled": ["bittrex"],
-    "default": "bittrex",
-    "cryptopia_id": "1234",
-    "ccex_key" : "Get-Your-Own-Key"
-  },
-
   // Richlist/top100 settings
   "richlist": {
     "distribution": true,
@@ -123,8 +110,6 @@
 
   // Index page settings
   "index": {
-    "show_hashrate": false,
-    "difficulty": "POT", // POT, POW, POS or Hybrid
     "last_txs": 100
   },
 
@@ -151,9 +136,6 @@
   "genesis_tx": "a9da8df30aa8c4d26d9ca33568a5235b193d65446297cdded39058cbee51d36b",
   "genesis_block": "d70fd9d81b708fe4e592755cfb9abcecec23d6d64eed06b9c9446a849b5bce94",
 
-  // Heavy features (set to false)
-  "heavy": false,
-
   // Amount of txs to index per address (stores latest n txs)
   "txcount": 100,
 
@@ -161,12 +143,9 @@
   "show_sent_received": false,
 
   // Current coin supply calculation
-  // COINBASE : total sent from coinbase (PoW)
-  // GETINFO : retreive from getinfo api call (PoS)
-  // HEAVY: retreive from heavys getsupply api call
   // BALANCES : total of all address balances
   // TXOUTSET : retreive from gettxoutsetinfo api call
-  "supply": "COINBASE",
+  "supply": "TXOUTSET",
 
   // Address labels
   // example : "TaBcDeFgHiJkLmNoPqRsTuVwXyZ1234567": {"label": "This is a burn address", "type":"danger", "url":"https://example.com"}

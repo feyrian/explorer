@@ -26,11 +26,9 @@ html
         $('##{active}').addClass('active');
         function update_stats(){   
           $.ajax({url: '/ext/summary', success: function(json){
-            // $("#supply").text(json.data[0].supply);
-            // $("#lastPrice").text(json.data[0].lastPrice.toFixed(8));
+            $("#supply").text(json.data[0].supply);
             $("#lblConnections").text(json.data[0].connections + ' connections');
             $("#lblBlockcount").text(json.data[0].blockcount + ' blocks');
-            // $("#lblX1").text(' ');
           }});
         }
         $('.block-last-next').tooltip({
@@ -92,11 +90,6 @@ html
               a.navbar-link(href='/') 
                 span.fa.fa-search
                 span.menu-text #{settings.locale.menu_explorer}
-            if settings.heavy == true
-              li#reward
-                a.navbar-link(href='/reward')
-                  span.fa.fa-star
-                  span.menu-text #{settings.locale.menu_reward}
             if settings.display.movement == true
               li#movement 
                 a.navbar-link.loading(href='/movement') 
@@ -112,11 +105,6 @@ html
                 a.navbar-link(href='/richlist')
                   span.fa.fa-chart-pie
                   span.menu-text #{settings.locale.menu_richlist}
-            if settings.display.markets == true
-              li#markets
-                a.navbar-link.loading(href='/markets/#{settings.markets.default}') 
-                  span.fa.fa-chart-line
-                  span.menu-text #{settings.locale.menu_markets}
             if settings.display.api == true
               li#info
                 a.navbar-link(href='/info')
@@ -135,7 +123,6 @@ html
       block content
 
     .navbar.navbar-default.navbar-fixed-bottom.hidden-xs
-      // .row
       .col-sm-4
         ul.nav.navbar-nav.snlinks
           if settings.snlinks.twitter

@@ -130,29 +130,6 @@ router.get('/info', function(req, res) {
   res.render('info', { active: 'info', address: settings.address, hashes: settings.api });
 });
 
-router.get('/markets/:market', function(req, res) {
-  var market = req.params['market'];
-  if (settings.markets.enabled.indexOf(market) != -1) {
-    db.get_market(market, function(data) {
-      /*if (market === 'bittrex') {
-        data = JSON.parse(data);
-      }*/
-      console.log(data);
-      res.render('./markets/' + market, {
-        active: 'markets',
-        marketdata: {
-          coin: settings.markets.coin,
-          exchange: settings.markets.exchange,
-          data: data,
-        },
-        market: market
-      });
-    });
-  } else {
-    route_get_index(res, null);
-  }
-});
-
 router.get('/richlist', function(req, res) {
   if (settings.display.richlist == true ) {
     db.get_stats(settings.coin, function (stats) {
@@ -192,27 +169,6 @@ router.get('/movement', function(req, res) {
 
 router.get('/network', function(req, res) {
   res.render('network', {active: 'network'});
-});
-
-router.get('/reward', function(req, res){
-  //db.get_stats(settings.coin, function (stats) {
-    console.log(stats);
-    db.get_heavy(settings.coin, function (heavy) {
-      //heavy = heavy;
-      var votes = heavy.votes;
-      votes.sort(function (a,b) {
-        if (a.count < b.count) {
-          return -1;
-        } else if (a.count > b.count) {
-          return 1;
-        } else {
-         return 0;
-        }
-      });
-
-      res.render('reward', { active: 'reward', stats: stats, heavy: heavy, votes: heavy.votes });
-    });
-  //});
 });
 
 router.get('/tx/:txid', function(req, res) {
@@ -282,42 +238,18 @@ router.get('/qr/:string', function(req, res) {
 });
 
 router.get('/ext/summary', function(req, res) {
-  difficultyHybrid = ''
-  lib.get_difficulty(function(difficulty) {
-    if (settings.index.difficulty == 'POT') {
-      difficulty = '';
-    } else {
-      if (difficulty['proof-of-work']) {
-        if (settings.index.difficulty == 'Hybrid') {
-          difficultyHybrid = 'POS: ' + difficulty['proof-of-stake'];
-          difficulty = 'POW: ' + difficulty['proof-of-work'];
-        } else if (settings.index.difficulty == 'POW') {
-          difficulty = difficulty['proof-of-work'];
-        } else {
-          difficulty = difficulty['proof-of-stake'];
-        }
-      }
-    }
-    lib.get_hashrate(function(hashrate) {
-      lib.get_connectioncount(function(connections){
-        lib.get_blockcount(function(blockcount) {
-          db.get_stats(settings.coin, function (stats) {
-            if (hashrate == 'There was an error. Check your console.') {
-              hashrate = 0;
-            }
-            res.send({ data: [{
-              difficulty: difficulty,
-              difficultyHybrid: difficultyHybrid,
-              supply: stats.supply,
-              hashrate: hashrate,
-              lastPrice: stats.last_price,
-              connections: connections,
-              blockcount: blockcount
-            }]});
-          });
-        });
+  lib.get_connectioncount(function(connections){
+    lib.get_blockcount(function(blockcount) {
+      db.get_stats(settings.coin, function (stats) {
+        res.send({ data: [{
+          supply: stats.supply,
+          lastPrice: stats.last_price,
+          connections: connections,
+          blockcount: blockcount
+        }]});
       });
     });
   });
 });
+
 module.exports = router;
