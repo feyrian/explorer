@@ -20,9 +20,8 @@
   // (see /public/themes for available themes)
   // Uses bootswatch themes (http://bootswatch.com/)
   // Valid options:
-  //     Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Lumen, Paper,
-  //     Readable, Sandstone, Simplex, Slate, Spacelab, Superhero, United, Yeti
-  "theme": "United",
+  //     tau, united
+  "theme": "tau",
 
   // Port to listen for requests on
   "port" : 3001,
