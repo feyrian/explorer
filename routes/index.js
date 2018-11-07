@@ -243,7 +243,7 @@ router.get('/ext/summary', function(req, res) {
       db.get_stats(settings.coin, function (stats) {
         res.send({ data: [{
           supply: stats.supply,
-          lastPrice: stats.last_price,
+          blocksindexed: stats.count,
           connections: connections,
           blockcount: blockcount
         }]});

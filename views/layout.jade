@@ -28,7 +28,7 @@ html
           $.ajax({url: '/ext/summary', success: function(json){
             $("#supply").text(json.data[0].supply);
             $("#lblConnections").text(json.data[0].connections + ' connections');
-            $("#lblBlockcount").text(json.data[0].blockcount + ' blocks');
+            $("#lblBlockcount").text(json.data[0].blocksindexed + " on " + json.data[0].blockcount + ' blocks');
           }});
         }
         $('.block-last-next').tooltip({
@@ -36,8 +36,8 @@ html
           delay: { hide: 500 },   
         });
         $('.history-table').dataTable( {        
-          searching: false,
-          ordering: false,
+          searching: true,
+          ordering: true,
           responsive: true
         });
         $('.iquidus').css('color',$('.table').css('color'));

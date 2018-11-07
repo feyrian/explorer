@@ -88,7 +88,7 @@
     "api_calls": "API Calls",
     "api_getconnectioncount": "Returns the number of connections the block explorer has to other nodes.",
     "api_getblockcount": "Returns the current block index.",
-    "api_getblockhash": "Returns the hash of the block at ; index 0 is the genesis block.",
+    "api_getblockhash": "Returns the hash of the block `index`, index 0 is the genesis block.",
     "api_getblock": "Returns information about the block with the given hash.",
-    "api_getrawtransaction": "Returns raw transaction representation for given transaction id. decrypt can be set to 0(false) or 1(true).",
+    "api_getrawtransaction": "Returns raw transaction representation for given transaction id, decrypt can be set to 0 or 1 (default).",
 }

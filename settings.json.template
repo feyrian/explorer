@@ -8,7 +8,8 @@
   "title": "TAU Explorer",
 
   // The url it will be accessed from
-  "address": "127.0.0.1:3001",
+  //"address": "http://block.taucoin.io",
+  "address": "127.0.0.1:3000",
 
   // Logo
   "logo": "/images/logo-tau.png",
