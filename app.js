@@ -1,31 +1,32 @@
-var express = require('express')
-  , path = require('path')
-  , bitcoinapi = require('bitcoin-node-api')
-  , favicon = require('static-favicon')
-  , logger = require('morgan')
-  , cookieParser = require('cookie-parser')
-  , bodyParser = require('body-parser')
-  , settings = require('./lib/settings')
-  , routes = require('./routes/index')
-  , lib = require('./lib/explorer')
-  , db = require('./lib/database')
-  , locale = require('./lib/locale')
-  , request = require('request');
+var express = require('express'),
+  path = require('path'),
+  bitcoinapi = require('bitcoin-node-api'),
+  favicon = require('static-favicon'),
+  logger = require('morgan'),
+  cookieParser = require('cookie-parser'),
+  bodyParser = require('body-parser'),
+  settings = require('./lib/settings'),
+  routes = require('./routes/index'),
+  lib = require('./lib/explorer'),
+  db = require('./lib/database'),
+  locale = require('./lib/locale'),
+  request = require('request');
 
 var app = express();
 
 // bitcoinapi
 bitcoinapi.setWalletDetails(settings.wallet);
 bitcoinapi.setAccess('only', [
-  'getinfo', 
+  'getinfo',
   'getmininginfo',
   'getconnectioncount',
   'getblockcount',
-  'getblockhash', 
-  'getblock', 
-  'getrawtransaction', 
-  'getpeerinfo', 
-  'gettxoutsetinfo'
+  'getblockhash',
+  'getblock',
+  'getrawtransaction',
+  'getpeerinfo',
+  'gettxoutsetinfo',
+  'gettxcount',
 ]);
 
 // view engine setup
