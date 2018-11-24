@@ -40,10 +40,12 @@ block content
               if (settings.show_sent_received == true)
                 td.text-numeric #{received.toFixed(8)}
               td
-                if (club.miner == address.a_id)
-                  span= settings.locale.club_leader
+                if (club.clubminer == address.a_id)
+                  |#{settings.locale.club_leader}
                 else
-                  |#{settings.locale.club_miner} #{club.clubminer}
+                  |#{settings.locale.club_miner} 
+                  a(href="/address/"+club.clubminer)
+                    |#{club.clubminer}
                 br
                 |#{settings.locale.club_clubpower} #{club.clubpower}
                 br
