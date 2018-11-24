@@ -252,4 +252,11 @@ router.get('/ext/summary', function(req, res) {
   });
 });
 
+router.post('/txs/count', function(req,res){
+    db.get_txs_count(function(count){
+        res.send({data:count})
+    });
+
+});
+
 module.exports = router;

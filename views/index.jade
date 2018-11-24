@@ -3,6 +3,20 @@ extends layout
 block content
   script.
     $(document).ready(function(){
+      var count = function(){
+        $.ajax({
+          url:"/txs/count",
+          data:"",
+          type:"POST",
+          success: function(ret){
+            if (ret){
+              $("#count").text(" Total transactions: "+ret.data).css({"float":"right"})
+            }
+          }
+        });
+      }
+      count()
+      setInterval(count,10000)
       var rtable = $('#recent-table').dataTable( {  
         autoWidth: true,      
         searching: false,
@@ -51,6 +65,7 @@ block content
     .panel.panel-default
       .panel-heading
         strong #{settings.locale.ex_latest_transactions}
+        strong#count
       table#recent-table.table.table-bordered.table-striped
         thead
           tr
