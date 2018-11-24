@@ -120,8 +120,8 @@ html
     .row
       block content
 
-    .navbar.navbar-inverse.navbar-fixed-bottom.hidden-xs
-      .col-sm-4
+    .navbar.navbar-inverse.navbar-fixed-bottom
+      .hidden-xs.col-sm-6.col-md-5
         ul.nav.navbar-nav.snlinks
           if settings.snlinks.twitter
             li
@@ -163,12 +163,12 @@ html
             li
               a#website-icon.snlink(href="" + settings.website, target='_blank')
                 span.fas.fa-globe
-      .col-sm-4
+      .hidden-xs.hidden-sm.col-md-2
         div.text-center(style='margin-top: 5px;')
           a.navbar-link(style='font-size: 120%;', href="https://github.com/" + settings.github_explorer, target='_blank') Tau explorer
           br
           a.navbar-link(style='font-size: 80%;', href='https://github.com/iquidus/explorer', target='_blank') Based on Iquidus Explorer 
-      .col-sm-4
+      .col-xs-12.col-sm-6.col-md-5
         div.connections.text-right
           span#lblTxcount.label.label-default -
           span#lblBlockcount.label.label-default -
