@@ -1,10 +1,15 @@
-var express = require('express')
-  , router = express.Router()
-  , settings = require('../lib/settings')
-  , locale = require('../lib/locale')
-  , db = require('../lib/database')
-  , lib = require('../lib/explorer')
-  , qr = require('qr-image');
+var express = require('express'), 
+    router = express.Router(),
+    settings = require('../lib/settings'),
+    locale = require('../lib/locale'),
+    db = require('../lib/database'),
+    lib = require('../lib/explorer'),
+    qr = require('qr-image');
+
+/* GET functions */
+function route_get_index(res, error) {
+  res.render('index', { active: 'home', error: error, warning: null});
+}
 
 function route_get_block(res, blockhash) {
   lib.get_block(blockhash, function (block) {
@@ -33,7 +38,6 @@ function route_get_block(res, blockhash) {
     }
   });
 }
-/* GET functions */
 
 function route_get_tx(res, txid) {
   if (txid == settings.genesis_tx) {
@@ -86,10 +90,6 @@ function route_get_tx(res, txid) {
       }
     });
   }
-}
-
-function route_get_index(res, error) {
-  res.render('index', { active: 'home', error: error, warning: null});
 }
 
 function route_get_address(res, hash, count) {
@@ -179,12 +179,12 @@ router.get('/block/:hash', function(req, res) {
   route_get_block(res, req.param('hash'));
 });
 
-router.get('/address/:hash', function(req, res) {
-  route_get_address(res, req.param('hash'), settings.txcount);
-});
-
 router.get('/address/:hash/:count', function(req, res) {
   route_get_address(res, req.param('hash'), req.param('count'));
+});
+
+router.get('/address/:hash', function(req, res) {
+  route_get_address(res, req.param('hash'), settings.txcount);
 });
 
 router.post('/search', function(req, res) {
@@ -240,15 +240,18 @@ router.get('/qr/:string', function(req, res) {
 router.get('/ext/summary', function(req, res) {
   lib.get_connectioncount(function(connections){
     lib.get_blockcount(function(blockcount) {
-      db.get_stats(settings.coin, function (stats) {
-        res.send({ data: [{
-          supply: stats.supply,
-          blocksindexed: stats.count,
-          connections: connections,
-          blockcount: blockcount
-        }]});
+      db.get_txcount(function(txcount) {
+        db.get_stats(settings.coin, function (stats) {
+          res.send({ data: [{
+            supply: stats.supply,
+            blocksindexed: stats.blockcount,
+            connections: connections,
+            blockcount: blockcount,
+            txcount: txcount,
+          }]});
+        });
       });
-    });
+    }); 
   });
 });
 

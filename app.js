@@ -1,7 +1,7 @@
 var express = require('express'),
   path = require('path'),
   bitcoinapi = require('bitcoin-node-api'),
-  favicon = require('static-favicon'),
+  favicon = require('serve-favicon'),
   logger = require('morgan'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
@@ -26,17 +26,17 @@ bitcoinapi.setAccess('only', [
   'getrawtransaction',
   'getpeerinfo',
   'gettxoutsetinfo',
-  'gettxcount',
+  'getmemberinfo',
 ]);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 app.use(favicon(path.join(__dirname, settings.favicon)));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -86,6 +86,12 @@ app.use('/ext/getdistribution', function(req,res){
   });
 });
 
+app.use('/ext/getlasttxs/:min/:count', function(req,res){
+  db.get_last_txs(req.params.count, (req.params.min * 100000000), function(txs){
+    res.send({data: txs});
+  });
+});
+
 app.use('/ext/getlasttxs/:min', function(req,res){
   db.get_last_txs(settings.index.last_txs, (req.params.min * 100000000), function(txs){
     res.send({data: txs});
@@ -95,6 +101,12 @@ app.use('/ext/getlasttxs/:min', function(req,res){
 app.use('/ext/connections', function(req,res){
   db.get_peers(function(peers){
     res.send({data: peers});
+  });
+});
+
+app.use('/ext/gettxcount', function(req,res){
+  db.get_txcount(function(txcount){
+    res.send(txcount);
   });
 });
 
@@ -109,6 +121,7 @@ app.set('bitcointalk', settings.bitcointalk);
 app.set('discord', settings.discord);
 app.set('facebook', settings.facebook);
 app.set('github', settings.github);
+app.set('github_explorer', settings.github_explorer);
 app.set('medium', settings.medium);
 app.set('reddit', settings.reddit);
 app.set('telegram', settings.telegram);
