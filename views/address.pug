@@ -1,9 +1,10 @@
 extends layout
 
 block content
-  - var balance = (address.received - address.sent) / 100000000;
-  - var sent = address.sent /100000000
+  - var balance = (address.received - address.sent) / 100000000
+  - var sent = address.sent / 100000000
   - var received = address.received / 100000000
+  - var rewards = club.rewards / 100000000
   .text-center
   .col-xs-12.col-md-10.col-md-offset-1
     .panel.panel-default.panel-address-summary
@@ -29,7 +30,8 @@ block content
             if (address.a_id !== "coinbase")
               if (settings.show_sent_received == true)
                 th #{settings.locale.total_received} (#{settings.symbol})
-              th.text-center #{settings.locale.rl_balance} (#{settings.symbol})
+              th.text-center #{settings.locale.club_infos}
+              th.text-center #{settings.locale.rl_balance}
         tbody             
           tr
             if (settings.show_sent_received == true)
@@ -37,7 +39,18 @@ block content
             if (address.a_id !== "coinbase")
               if (settings.show_sent_received == true)
                 td.text-numeric #{received.toFixed(8)}
-              td.text-numeric #{balance.toFixed(8)}
+              td
+                if (club.miner == address.a_id)
+                  span= settings.locale.club_leader
+                else
+                  |#{settings.locale.club_miner} #{club.clubminer}
+                br
+                |#{settings.locale.club_clubpower} #{club.clubpower}
+                br
+                |#{settings.locale.club_selfpower} #{club.selfpower}
+                br
+                |#{settings.locale.club_rewards} #{rewards.toFixed(8)} #{settings.symbol}
+              td.text-nowrap.text-numeric #{balance.toFixed(8)} #{settings.symbol}
     
     .panel.panel-default
       .panel-heading

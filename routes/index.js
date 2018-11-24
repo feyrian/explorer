@@ -1,10 +1,13 @@
 var express = require('express'), 
+    request = require('request'),
     router = express.Router(),
     settings = require('../lib/settings'),
     locale = require('../lib/locale'),
     db = require('../lib/database'),
     lib = require('../lib/explorer'),
     qr = require('qr-image');
+
+var api_url = 'http://127.0.0.1:' + settings.port + '/api/';
 
 /* GET functions */
 function route_get_index(res, error) {
@@ -97,6 +100,9 @@ function route_get_address(res, hash, count) {
     if (address) {
       var txs = [];
       var hashes = address.txs.reverse();
+
+      var uri = api_url + 'getmemberinfo?address=' + hash;
+
       if (address.txs.length < count) {
         count = address.txs.length;
       }
@@ -111,10 +117,10 @@ function route_get_address(res, hash, count) {
           }
         });
       }, function(){
-
-        res.render('address', { active: 'address', address: address, txs: txs});
+        request({uri: uri, json: true}, function (error, response, club) {
+          res.render('address', { active: 'address', address: address, txs: txs, club: club});
+        });
       });
-
     } else {
       route_get_index(res, hash + ' not found');
     }
@@ -172,19 +178,19 @@ router.get('/network', function(req, res) {
 });
 
 router.get('/tx/:txid', function(req, res) {
-  route_get_tx(res, req.param('txid'));
+  route_get_tx(res, req.params.txid);
 });
 
 router.get('/block/:hash', function(req, res) {
-  route_get_block(res, req.param('hash'));
+  route_get_block(res, req.params.hash);
 });
 
 router.get('/address/:hash/:count', function(req, res) {
-  route_get_address(res, req.param('hash'), req.param('count'));
+  route_get_address(res, req.params.hash, req.params.count);
 });
 
 router.get('/address/:hash', function(req, res) {
-  route_get_address(res, req.param('hash'), settings.txcount);
+  route_get_address(res, req.params.hash, settings.txcount);
 });
 
 router.post('/search', function(req, res) {
@@ -225,8 +231,8 @@ router.post('/search', function(req, res) {
 });
 
 router.get('/qr/:string', function(req, res) {
-  if (req.param('string')) {
-    var address = qr.image(req.param('string'), {
+  if (req.params.string) {
+    var address = qr.image(req.params.string, {
       type: 'png',
       size: 4,
       margin: 1,

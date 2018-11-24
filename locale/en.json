@@ -58,6 +58,14 @@
     // movement
     "mv_latest_movements": "Latest movements greater than",
 
+    // address
+    "club_infos": "Club infos",
+    "club_miner": "Club address: ",
+    "club_leader": "This address is a Club Leader",
+    "club_clubpower": "Club power: ",
+    "club_selfpower": "Self power: ",
+    "club_rewards": "Mining rewards earned: ",
+
     // block
     "block_title": "Block Details",
     "block_previous": "Previous",
