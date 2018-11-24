@@ -61,7 +61,7 @@
     // address
     "club_infos": "Club infos",
     "club_miner": "Club address: ",
-    "club_leader": "This address is a Club Leader",
+    "club_leader": "This address is it's own Club Leader",
     "club_clubpower": "Club power: ",
     "club_selfpower": "Self power: ",
     "club_rewards": "Mining rewards earned: ",
