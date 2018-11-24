@@ -106,7 +106,7 @@ app.use('/ext/connections', function(req,res){
 
 app.use('/ext/gettxcount', function(req,res){
   db.get_txcount(function(txcount){
-    res.send(txcount);
+    res.send(''+txcount);
   });
 });
 
