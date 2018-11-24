@@ -36,7 +36,8 @@ html
         $('.history-table').dataTable( {        
           searching: false,
           ordering: true,
-          responsive: true
+          responsive: true,
+          order: [[ 0, "desc" ]],
         });
         $('.iquidus').css('color',$('.table').css('color'));
         $(window).resize(function () { 

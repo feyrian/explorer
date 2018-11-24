@@ -4,12 +4,13 @@ block content
   script.
     $(document).ready(function(){
       var rtable = $('#recent-table').dataTable( {  
-        autoWidth: true,      
+        autoWidth: true,
         searching: false,
         ordering: true,
         responsive: true,
         lengthChange: true,
         processing: true,
+        order: [[ 0, "desc" ]],
         ajax: {
           url: '/ext/getlasttxs/0.00000001',
           dataSrc: function ( json ) {

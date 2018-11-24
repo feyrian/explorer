@@ -35,6 +35,7 @@ block content
         responsive: true,
         lengthChange: true,
         processing: true,
+        order: [[ 0, "desc" ]],
         ajax: {
           url: '/ext/getlasttxs/#{min_amount}',
           dataSrc: function ( json ) {
