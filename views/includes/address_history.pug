@@ -5,12 +5,6 @@ thead
     th.text-center.hidden-xs.hidden-sm #{settings.locale.tx_type}
     th.text-center
       div #{settings.locale.amount}&nbsp;(#{settings.symbol})
-      //- table.table.table-bordered(style="margin: 0 auto; max-width: 180px;")
-      //-   tbody
-      //-     tr(style="font-size: 10px; font-weight: normal;")
-      //-       td.info To Self
-      //-       td.success  Received
-      //-       td.danger Sent
 tbody
   each tx in txs
     - var time = format_unixtime(tx.timestamp)
@@ -20,8 +14,6 @@ tbody
         a(href="/tx/"+tx.txid) 
           span.hidden-xs.hidden-sm #{tx.txid}
           span.hidden-md.hidden-lg.fa.fa-eye.iquidus
-        //- br
-        //- #{tx}
       
       - var vout = 0
       - var vin = 0
@@ -32,11 +24,18 @@ tbody
       - var tx_type = ""
       - var sign = ""
       - var amount = 0
+      - var is_signal_start = false
+      - var is_signal_join = false
       
       each receiver in tx.vout
         if receiver.addresses == address.a_id
           - is_receiver = true
           - vout = receiver.amount
+        if receiver.isSignal
+          if receiver.addresses == address.a_id
+            - is_signal_start = true
+          else
+            - is_signal_join = true
       each sender in tx.vin
         if sender.addresses == address.a_id
           - is_sender = true
@@ -46,23 +45,22 @@ tbody
 
       if is_receiver && is_sender
         - amount = (vout - vin) / 100000000
-        - sign = "-"
         if amount < 0
           - amount = amount * -1
-          if tx.vout.length > 1
-            - tx_class = "danger"
-            - tx_type = settings.locale.tx_type_sent
-          else
-            - tx_class = "info"
-            - tx_type = settings.locale.tx_type_self
-        else if amount > 0
+          - sign = "-"
+        if tx.vout.length > 1
+          - tx_class = "danger"
+          - tx_type = settings.locale.tx_type_sent
+        else
           - tx_class = "info"
-          - tx_type = "???"
-          - sign = "+"
-        else if amount == 0
+          - tx_type = settings.locale.tx_type_self
+
+        if is_signal_start
           - tx_class = "warning text-info"
           - tx_type = settings.locale.tx_type_signal_club_start
-          - sign = ""
+        if is_signal_join
+          - tx_class = "warning text-info"
+          - tx_type = settings.locale.tx_type_signal_club_join
 
       else if is_receiver
         - tx_class = "success"
@@ -89,9 +87,11 @@ tbody
         - var amount = vin / 100000000
         if amount == 0
           - tx_class = "warning text-danger"
-          - tx_type = settings.locale.tx_type_signal_club_joining
+          - tx_type = settings.locale.tx_type_signal_club_join
           - sign = ""
 
+      if amount != 0
+        - amount = amount.toFixed(8)
       td(class="hidden-xs hidden-sm " + tx_class) #{tx_type}
-      td(class="text-numeric " + tx_class) #{sign}&nbsp;#{amount.toFixed(8)}
+      td(class="text-numeric " + tx_class) #{sign}&nbsp;#{amount}
       

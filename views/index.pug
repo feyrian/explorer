@@ -9,6 +9,7 @@ block content
         ordering: true,
         responsive: true,
         lengthChange: true,
+        pageLength: #{settings.datatable.page_length},
         processing: true,
         order: [[ 0, "desc" ]],
         ajax: {
@@ -51,7 +52,8 @@ block content
   .col-md-12
     .panel.panel-default
       .panel-heading
-        strong #{settings.locale.ex_latest_transactions}
+        - panel_title = settings.index.last_txs + " " + settings.locale.ex_latest_transactions
+        strong #{panel_title}
         span#Txcount.pull-right -
       table#recent-table.table.table-bordered.table-striped
         thead

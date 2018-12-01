@@ -4,13 +4,14 @@ block content
   script.
     $(document).ready(function(){
       var ctable = $('#connections-table').dataTable( {  
-        autoWidth: true,      
         searching: false,
-        ordering: true,
-        responsive: true,
-        lengthChange: true,
         processing: true,
+        autoWidth: true,      
+        responsive: true,
+        ordering: true,
         order: [[ 3, "asc" ]],
+        lengthChange: true,
+        pageLength: #{settings.datatable.page_length},
         ajax: {
           url: '/ext/connections',
           dataSrc: function ( json ) {

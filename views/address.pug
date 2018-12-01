@@ -56,8 +56,12 @@ block content
     
     .panel.panel-default
       .panel-heading
-        strong #{settings.txcount} #{settings.locale.ex_latest_transactions}
+        - panel_title = txs.length + " " + settings.locale.ex_latest_transactions
+        if txs.length <= settings.txcount
+          - panel_title = txs.length + " " + settings.locale.transactions
+        strong #{panel_title}
       table.table.table-bordered.table-striped.history-table
+
         include includes/address_history
 
     .footer-padding

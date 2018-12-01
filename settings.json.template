@@ -113,6 +113,14 @@
     "last_txs": 100
   },
 
+  // Amount of txs to index per address (stores latest n txs)
+  "txcount": 100,
+
+  // Datatable options  
+  "datatable":{
+    "page_length": 50
+  },
+
   // Social networks and website
   "bitcointalk": "4757879", // https://bitcointalk.org/index.php?topic=XXXX
   "discord": "ydhx3um", // https://discord.gg/XXXX
@@ -137,8 +145,6 @@
   "genesis_tx": "a9da8df30aa8c4d26d9ca33568a5235b193d65446297cdded39058cbee51d36b",
   "genesis_block": "d70fd9d81b708fe4e592755cfb9abcecec23d6d64eed06b9c9446a849b5bce94",
 
-  // Amount of txs to index per address (stores latest n txs)
-  "txcount": 100,
 
   // Show total sent & received on address page (set false if PoS)
   "show_sent_received": false,

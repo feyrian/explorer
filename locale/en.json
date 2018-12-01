@@ -51,7 +51,7 @@
     "tx_type_received": "Received",
     "tx_type_signal_club_start": "Starting Club",
     "tx_type_signal_club_member": "New club member",
-    "tx_type_signal_club_joining": "Joining Club",
+    "tx_type_signal_club_join": "Joining Club",
     "tx_type_mined": "Mining reward",
     "tx_type_mined_orphan": "Orphan",
 

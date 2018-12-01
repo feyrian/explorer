@@ -35,9 +35,11 @@ html
         });
         $('.history-table').dataTable( {        
           searching: false,
-          ordering: true,
           responsive: true,
+          ordering: true,
           order: [[ 0, "desc" ]],
+          pageLength: #{settings.datatable.page_length},
+          lengthChange: true,
         });
         $('.iquidus').css('color',$('.table').css('color'));
         $(window).resize(function () { 

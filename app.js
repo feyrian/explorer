@@ -1,4 +1,4 @@
-var express = require('express'),
+const express = require('express'),
   path = require('path'),
   bitcoinapi = require('bitcoin-node-api'),
   favicon = require('serve-favicon'),
@@ -12,7 +12,7 @@ var express = require('express'),
   locale = require('./lib/locale'),
   request = require('request');
 
-var app = express();
+const app = express();
 
 // bitcoinapi
 bitcoinapi.setWalletDetails(settings.wallet);
@@ -131,6 +131,7 @@ app.set('youtube', settings.youtube);
 app.set('genesis_block', settings.genesis_block);
 app.set('index', settings.index);
 app.set('txcount', settings.txcount);
+app.set('datatable', settings.datatable);
 app.set('show_sent_received', settings.show_sent_received);
 app.set('logo', settings.logo);
 app.set('theme', settings.theme);

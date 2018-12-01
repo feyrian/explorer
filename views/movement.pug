@@ -29,13 +29,14 @@ block content
         return time;
       }
       var rtable = $('#alerts-table').dataTable( {  
-        autoWidth: true,      
         searching: false,
-        ordering: true,
-        responsive: true,
-        lengthChange: true,
         processing: true,
+        autoWidth: true,      
+        responsive: true,
+        ordering: true,
         order: [[ 0, "desc" ]],
+        lengthChange: true,
+        pageLength: #{settings.datatable.page_length},
         ajax: {
           url: '/ext/getlasttxs/#{min_amount}',
           dataSrc: function ( json ) {
@@ -59,14 +60,12 @@ block content
           { data: 'timestamp', class:'text-nowrap', width: '25%' },
           { data: 'txid', class:'text-mono', width: '60%' },
           { data: 'total', class:'text-numeric', width: '15%' }
-          //- { data: 'total', render: $.fn.dataTable.render.number( ',', '.', 8), width: '15%' }
         ]
       });
       setInterval( function () {
         rtable.api().ajax.reload(null, false);
       }, 45000 );
     });
-  //- .col-md-12(style="margin-bottom: 5%")
   .col-xs-12.col-md-10.col-md-offset-1
      .panel.panel-default
       .panel-heading
