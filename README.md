@@ -8,7 +8,7 @@ This project is a fork of [Iquidus Explorer](https://github.com/iquidus/explorer
 ### Requires
 
 *  node.js >= 0.10.28
-*  mongodb 2.6.x
+*  mongodb 3.1.x
 *  taucoind, taucoin-cli
 
 ### Create database
@@ -23,11 +23,11 @@ Create databse:
 
 Create user with read/write access:
 
-    > {db.createUser( { user: "user", pwd: "pwd", roles: [ "readWrite" ] } )}
+    > db.createUser( { user: "user", pwd: "pwd", roles: [ "readWrite" ] } )
 
 ### Get the source
 
-    git clone https://github.com/Feyrian/tau-explorer tau-explorer
+    git clone https://github.com/Tau-Coin/tau-explorer tau-explorer
 
 ### Install node modules
 
@@ -45,7 +45,7 @@ Create user with read/write access:
 
 *note: mongod must be running to start the explorer*
 
-As of version 1.4.0 the explorer defaults to cluster mode, forking an instance of its process to each cpu core. This results in increased performance and stability. Load balancing gets automatically taken care of and any instances that for some reason die, will be restarted automatically. For testing/development (or if you just wish to) a single instance can be launched with
+The explorer defaults to cluster mode, forking an instance of its process to each cpu core. This results in increased performance and stability. Load balancing gets automatically taken care of and any instances that for some reason die, will be restarted automatically. For testing/development (or if you just wish to) a single instance can be launched with
 
     node --stack-size=10000 bin/instance
 
@@ -61,7 +61,6 @@ sync.js (located in scripts/) is used for updating the local databases. This scr
 
     database: (required)
     index [mode] Main index: coin info/stats, transactions & addresses
-    market       Market data: summaries, orderbooks, trade history & chartdata
 
     mode: (required for index database only)
     update       Updates index from last sync to current block
@@ -83,7 +82,6 @@ sync.js (located in scripts/) is used for updating the local databases. This scr
 *Example crontab; update index every minute and market data every 2 minutes*
 
     */1 * * * * cd /path/to/tau-explorer && /usr/bin/nodejs scripts/sync.js index update > /dev/null 2>&1
-    */2 * * * * cd /path/to/tau-explorer && /usr/bin/nodejs scripts/sync.js market > /dev/null 2>&1
     */5 * * * * cd /path/to/tau-explorer && /usr/bin/nodejs scripts/peers.js > /dev/null 2>&1
 
 ### Wallet
@@ -97,7 +95,6 @@ The wallet must be running with atleast the following flags
     BTC: 16eYur5vas3JVq8zEtfzy5nht8paC8683
     TAU: TAAB2V8P1bGAkUtktQbk3MTKpbCWK4KghG
     
-
 ### Known Issues
 
 **script is already running.**
@@ -126,8 +123,9 @@ Where [SIZE] is an integer higher than the default.
 
 ### License
   
-Copyright (c) 2015, Iquidus Technology  
-Copyright (c) 2015, Luke Williams  
+Copyright (c) 2018, Tau Foundation
+Copyright (c) 2015, Iquidus Technology
+Copyright (c) 2015, Luke Williams
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
