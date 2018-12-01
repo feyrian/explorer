@@ -1,14 +1,14 @@
-var mongoose = require('mongoose')
-  , db = require('../lib/database')
-  , Address = require('../models/address')  
-  , Richlist = require('../models/richlist')  
-  , Stats = require('../models/stats')  
-  , Tx = require('../models/tx')  
-  , settings = require('../lib/settings')
-  , fs = require('fs');
+const mongoose = require('mongoose'),
+  db = require('../lib/database'),
+  Address = require('../models/address'),
+  Richlist = require('../models/richlist'),
+  Stats = require('../models/stats'),
+  Tx = require('../models/tx'),
+  settings = require('../lib/settings'),
+  fs = require('fs');
 
 var mode = 'update';
-var database = 'index';
+const database = 'index';
 
 // displays usage and exits
 function usage() {
@@ -36,19 +36,18 @@ if (process.argv[2] == 'index') {
   if (process.argv.length <3) {
     usage();
   } else {
-    switch(process.argv[3])
-    {
-    case 'update':
-      mode = 'update';
+    switch(process.argv[3]) {
+      case 'update':
+        mode = 'update';
       break;
-    case 'check':
-      mode = 'check';
+      case 'check':
+        mode = 'check';
       break;
-    case 'reindex':
-      mode = 'reindex';
+      case 'reindex':
+        mode = 'reindex';
       break;
-    default:
-      usage();
+      default:
+        usage();
     }
   }
 } else {
@@ -109,11 +108,16 @@ function exit() {
   });
 }
 
-var dbString = 'mongodb://' + settings.dbsettings.user;
-dbString = dbString + ':' + settings.dbsettings.password;
-dbString = dbString + '@' + settings.dbsettings.address;
-dbString = dbString + ':' + settings.dbsettings.port;
-dbString = dbString + '/' + settings.dbsettings.database;
+var dbUri = 'mongodb://' + settings.dbsettings.user;
+dbUri = dbUri + ':' + settings.dbsettings.password;
+dbUri = dbUri + '@' + settings.dbsettings.address;
+dbUri = dbUri + ':' + settings.dbsettings.port;
+dbUri = dbUri + '/' + settings.dbsettings.database;
+
+const opts = { 
+  useCreateIndex: true,
+  useNewUrlParser: true
+}
 
 is_locked(function (exists) {
   if (exists) {
@@ -122,9 +126,9 @@ is_locked(function (exists) {
   } else {
     create_lock(function (){
       console.log("Script launched with pid: " + process.pid);
-      mongoose.connect(dbString, { useNewUrlParser: true }, function(err) {
+      mongoose.connect(dbUri, opts, function(err) {
         if (err) {
-          console.log('Unable to connect to database: %s', dbString);
+          console.log('Unable to connect to database: %s', dbUri);
           console.log('Aborting');
           exit();
         } else if (database == 'index') {

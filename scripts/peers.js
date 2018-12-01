@@ -11,11 +11,15 @@ function exit() {
   process.exit(0);
 }
 
-var dbString = 'mongodb://' + settings.dbsettings.user;
-dbString = dbString + ':' + settings.dbsettings.password;
-dbString = dbString + '@' + settings.dbsettings.address;
-dbString = dbString + ':' + settings.dbsettings.port;
-dbString = dbString + '/' + settings.dbsettings.database;
+var dbUri = 'mongodb://' + settings.dbsettings.user;
+dbUri = dbUri + ':' + settings.dbsettings.password;
+dbUri = dbUri + '@' + settings.dbsettings.address;
+dbUri = dbUri + ':' + settings.dbsettings.port;
+dbUri = dbUri + '/' + settings.dbsettings.database;
+const opts = { 
+  useCreateIndex: true,
+  useNewUrlParser: true
+}
 
 function trim(s, mask) {
     while (~mask.indexOf(s[0])) {
@@ -27,9 +31,9 @@ function trim(s, mask) {
     return s;
 }
 
-mongoose.connect(dbString, { useNewUrlParser: true },  function(err) {
+mongoose.connect(dbUri, opts,  function(err) {
   if (err) {
-    console.log('Unable to connect to database: %s', dbString);
+    console.log('Unable to connect to database: %s', dbUri);
     console.log('Aborting');
     exit();
   } else {
