@@ -1,8 +1,6 @@
 extends layout
 
 block content
-  - var time = format_unixtime(block.time)
-  - var time2 = new Date(block.time).toTimeString();
   .col-xs-12.col-md-10.col-md-offset-1
     .well.well-sm.hidden-lg.hidden-md(style='word-wrap:break-word;')
       | #{block.hash}
@@ -36,6 +34,7 @@ block content
             else
              - var trclass = 'warning'
           - var block_size = block.size/1024
+          - var time = format_unixtime(block.time)
           tr(class="#{trclass}")
             td #{block.height}
             td #{block.confirmations}
